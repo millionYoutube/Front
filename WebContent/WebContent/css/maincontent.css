@@ -1,0 +1,152 @@
+/*카테고리 테이블 css*/
+ 
+ div.left {
+    width : 50%;
+    float : left;
+    box-sizing : border-box;
+    border-right:2px solid #404040;
+ }
+ 
+ div.right {
+    width : 50%;
+    float : right;
+    box-sizing : border-box;
+    /* border-left:2px solid #6e6e6e; */
+ }
+ 
+
+
+ .button_category {
+  padding: 15px 100px;
+  margin:10px 4px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative; /*relative 꼭 있어야 함!*/
+  text-decoration: none;
+  display:inline-block;
+  
+  cursor: pointer;
+}
+
+.button_category::before {
+  content: '';
+  position: absolute;
+  bottom: 50%;
+  left: 0px;
+  width: 100%;
+  height: 1px;
+  display: block;
+  -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
+  transform-origin: left top;
+  -webkit-transform: scale(0, 1);
+  -ms-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: transform 0.4s cubic-bezier(1, 0, 0, 1);
+  transition: transform 0.4s cubic-bezier(1, 0, 0, 1)
+}
+
+.button_category:hover::before {
+  -webkit-transform-origin: right top;
+  -ms-transform-origin: right top;
+  transform-origin: right top;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1)
+}
+
+.button_category::before {
+  content: '';
+  position: absolute;
+  bottom: 0%;
+  left: 0px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to bottom, #f7efa5, #b48446);
+  display: block;
+  -webkit-transform-origin: right top;
+  -ms-transform-origin: right top;
+  transform-origin: right top;
+  -webkit-transform: scale(0, 1);
+  -ms-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: transform 0.4s cubic-bezier(1, 0, 0, 1);
+  transition: transform 0.4s cubic-bezier(1, 0, 0, 1)
+}
+
+.button_category:hover::before {
+  -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
+  transform-origin: left top;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1)
+}
+
+.current{ 
+  background: linear-gradient(to bottom, #f7efa5, #b48446);
+  background-repeat: no-repeat;
+  background-size : auto 1%;
+  background-position: bottom;
+}
+
+.prev_button {
+	display : inline-block, none;
+}
+.next_button {
+	display : inline-block;
+	background-color : pink;
+	color : blue;
+}
+
+
+.tab .big_list1, .big_list2 {
+	display : inline-block;
+	/* width : calc(100%/4); */
+	animation : slide 8s infinite;
+}
+    @keyframes slide {
+      0% {margin-left:0;} /* 0 ~ 10  : 정지 */
+      10% {margin-left:0;} /* 10 ~ 25 : 변이 */
+      25% {margin-left:-100%;} /* 25 ~ 35 : 정지 */
+      35% {margin-left:-100%;} /* 35 ~ 50 : 변이 */
+      50% {margin-left:-200%;}
+      60% {margin-left:-200%;}
+      75% {margin-left:-300%;}
+      85% {margin-left:-300%;}
+      100% {margin-left:0;}
+    }
+    
+.tab .big_list2 {
+	display : inline-block, none;
+}
+
+
+#table_all {
+	border-collapse: collapse;
+	width: 100%;
+	/* background: linear-gradient(to bottom, #f7efa5, #b48446);
+   background-color: rgba( 255, 255, 255, 0.5 ); */
+}
+
+#table_all th, td {
+	padding: 8px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	color: white;
+}
+
+#table_all .profile {
+	text-align: left;
+}
+
+#table_all .channel_name {
+	font-size : 22px;
+	text-align : left;
+	margin-bottom : 13px;
+}
+
+#table_all .channel_subscribers {
+	text-align : left;
+}
