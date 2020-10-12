@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Million Youtuber</title>
-<link rel="shortcut icon" href="favicon.ico" type="image/" />
+<%--  <link rel="shortcut icon" href="favicon.ico" type="image/" /> --%>
 
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" type="text/css" href="css/slick.css">
@@ -34,13 +34,13 @@
                     cssEase: 'linear'
                 });
                 
-         		$('ul.tab li').click(function() {
-           			var activeTab = $(this).attr('data-tab');
-            		$('ul.tab li').removeClass('current');
-            		$('.tabcontent').removeClass('current');
-            		$(this).addClass('current');
-            		$('#' + activeTab).addClass('current');
-         		});
+                $('ul.tab li ul li').click(function() {
+                    var activeTab = $(this).attr('data-tab');
+                    $('ul.tab li ul li').removeClass('current');
+                      $('.tabcontent').removeClass('current');
+                      $(this).addClass('current');
+                      $('#' + activeTab).addClass('current');
+                 });
          		
          		$(".next_button").click(function(){
          			
@@ -139,116 +139,119 @@
 		<div id="hr"></div>
 		<div>
 			<div class="left">
+			<script> <%-- 리스트 불러오기 --%>
+				function viewSelectList(idx){
+					if(idx==1){ //이전 버튼 클릭
+						$(".big_list1").css("display","");
+						$(".big_list2").css("display","none");
+					}else if(idx==2){ //다음 버튼 클릭
+						$(".big_list1").css("display","none");
+						$(".big_list2").css("display","");
+					}
+				}
+				
+				function viewSelectTable(idx){
+					if(idx==1){
+						$("#table_all").css("visibility","visible");
+						$("#table_game").css("visibility","hidden");
+					}else if(idx==3){
+						$("#table_all").css("visibility","hidden");
+						$("#table_game").css("visibility","hidden");
+					}
+				}
+				
+                function getJson(urlName){
+                    
+                    $.ajax({
+                       url : urlName,
+                       type:"GET",
+                       dataType : "json",
+                       mimeType: "application/json",
+                       success : function(result){
+                          makeTable(result, ".table_content");
+                       }
+                    });
+                    var tableData="";
+                 function makeTable(result, id){
+                       var list = $(id).empty();
+                      $(result).each(function(index, value) {
+                      	if(index<3){
+                         		tableData = tableData + "<tr><td scope='row'><img src='"+value.RankImg+"' width=50 height=40></td>";
+                      	}
+                      	else if(index>=3){
+                      		tableData = tableData + "<tr><td scope='row'>"+(index+1)+"</td>";
+                      	}
+                          tableData = tableData + "<td class='profile'><img src='"+value.Profile+"' width=90 height=90> </td>";
+                          tableData = tableData + "<td><div><div class='channel_name'>"+value.Name+"</div><div class='channel_subscribers'>"+value.Subscribers+"</div></div></td>";
+                          tableData = tableData +   "<td class='main_video'><a href='"+value.MainVideo+"' target='_blank'><img src='" +value.Profile+"' width=140 height=90></td></tr>";
+                      });
+                   $(".table_content").append(tableData);
+                    }
+                 }
+			</script>
 				<div class="contentsTitle">
 					<img src="img/ranking.png" width=70 height=50>랭킹순위
 				</div>
 				<div class="sub_catergory1" align="center">
-					<input class=prev_button" type="button" value="이전">
+					<input class="prev_button" type="button" value="이전" onclick="viewSelectList(1);" />
 					<ul class="tab">
                     <li class="big_list1">
                         <ul>
-                            <li class="button_category current" data-tab="tab1"> <a class="">전체</a> </li>
-                            <li class="button_category" data-tab="tab2"> <a class="">음악</a> </li>
-                            <li class="button_category" data-tab="tab3"> <a class="">게임</a> </li>
+                            <li class="button_category current" data-tab="tab1"> <a class="" onclick="viewSelectTable(1);">전체</a> </li>
+                            <li class="button_category" data-tab="tab2"> <a class="" onclick="viewSelectTable(2);">음악</a> </li>
+                            <li class="button_category" data-tab="tab3"> <a class="" onclick="getJson('./json/tableGame.json'); viewSelectTable(3);">게임</a> </li>
                         </ul>
                     </li>
 
-                    <li class="big_list2">
+                    <li class="big_list2" style="display:none;">
                         <ul>
-                            <li class="button_category" data-tab="tab1"> <a class="">영화</a> </li>
-                            <li class="button_category" data-tab="tab2"> <a class="">학습</a> </li>
-                            <li class="button_category" data-tab="tab3"> <a class="">스포츠</a> </li>
+                            <li class="button_category" data-tab="tab1"> <a class="" onclick=" viewSelectTable(4);">영화</a> </li>
+                            <li class="button_category" data-tab="tab2"> <a class="" onclick="viewSelectTable(5);">학습</a> </li>
+                            <li class="button_category" data-tab="tab3"> <a class="" onclick="viewSelectTable(6);">스포츠</a> </li>
                         </ul>
                     </li>
-                </ul>
-					<input class="next_button" type="button" value="다음">
-					<!-- <a class="button_category" href="#" id="cate_all">전체(디폴트)</a>
-               <a class="button_category" href="#" id="cate_music">음악</a>
-               <a class="button_category" href="#" id="cate_game">게임</a> -->
-					<!-- 여기는 옆으로 넘기기 클릭하면? 추가돼서 보일 수 있는 구조로..ㅠㅠ -->
-					<!--                <a class="button_category" href="#" id="cate_movie">영화</a> 
-                      <a class="button_category" href="#" id="cate_edu">학습</a> -->
+                	</ul>
+					<input class="next_button" type="button" value="다음" onclick="viewSelectList(2);" />
+				<script>
+                $(function(){
+                  
+                  $.ajax({
+                     url : "./json/tableAll.json",
+                     type:"GET",
+                     dataType : "json",
+                     mimeType: "application/json",
+                     success : function(result){
+                        makeTable(result, ".table_content");
+                     }
+                  });
+                  var tableData="";
+               function makeTable(result, id){
+                     var list = $(id).empty();
+                    $(result).each(function(index, value) {
+                    	if(index<3){
+                       		tableData = tableData + "<tr><td scope='row'><img src='"+value.RankImg+"' width=50 height=40></td>";
+                    	}
+                    	else if(index>=3){
+                    		tableData = tableData + "<tr><td scope='row'>"+(index+1)+"</td>";
+                    	}
+                        tableData = tableData + "<td class='profile'><img src='"+value.Profile+"' width=90 height=90> </td>";
+                        tableData = tableData + "<td class='genre' >"+value.Genre+"</td>";
+                        tableData = tableData + "<td><div><div class='channel_name'>"+value.Name+"</div><div class='channel_subscribers'>"+value.Subscribers+"</div></div></td>";
+                        tableData = tableData +   "<td class='main_video'><a href='"+value.MainVideo+"' target='_blank'><img src='" +value.Profile+"' width=140 height=90></td></tr>";
+                    });
+                 $(".table_content").append(tableData);
+                  }
+               }); 
+            	</script>
+
 				</div>
 
 
 				<table id="table_all">
 					<!--  style ="visibility:hidden;" -->
-					<thead>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"><img src="img/no1.png" width=50 height=40></th>
-							<td class="profile"><img src="img/1위프로필.jpg" width=90
-								height=90></td>
-							<td>
-								<div>
-									<div class="channel_name">BLACKPINK</div>
-									<div class="channel_subscribers">5010만</div>
-								</div>
-							</td>
-							<td class="main_video"><a
-								href="https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A"
-								target="_blank"><img src="img/1위프로필.jpg" width=140 height=90></td>
-						</tr>
-						<tr>
-							<th scope="row"><img src="img/no2.png" width=50 height=40></th>
-							<td class="profile"><img src="img/2위프로필.jpg" width=90
-								height=90></td>
-							<td>
-								<div>
-									<div class="channel_name">Big Hit Labels</div>
-									<div class="channel_subscribers">4490만</div>
-								</div>
-							</td>
-							<td class="main_video"><a
-								href="https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A"
-								target="_blank"><img src="img/2위프로필.jpg" width=140 height=90></td>
-						</tr>
-						<tr>
-							<th scope="row"><img src="img/no3.png" width=50 height=40></th>
-							<td class="profile"><img src="img/3위프로필.jpg" width=90
-								height=90>
-							<td>
-								<div>
-									<div class="channel_name">BANGTANTV</div>
-									<div class="channel_subscribers">3790만</div>
-								</div>
-							</td>
-							<td class="main_video"><a
-								href="https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A"
-								target="_blank"><img src="img/3위프로필.jpg" width=140 height=90>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td class="profile"><img src="img/4위프로필.jpg" width=90
-								height=90>
-							<td>
-								<div>
-									<div class="channel_name">Boram Tube Vlog</div>
-									<div class="channel_subscribers">2650만</div>
-								</div>
-							</td>
-							<td class="main_video"><a
-								href="https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A"
-								target="_blank"><img src="img/4위프로필.jpg" width=140 height=90>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td class="profile"><img src="img/5위프로필.jpg" width=90
-								height=90>
-							<td>
-								<div>
-									<div class="channel_name">SMTOWN</div>
-									<div class="channel_subscribers">2420만</div>
-								</div>
-							</td>
-							<td class="main_video"><a
-								href="https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A"
-								target="_blank"><img src="img/5위프로필.jpg" width=140 height=90>
-						</tr>
-					</tbody>
+					<thead></thead>
+					<tbody class="table_content"></tbody>
 				</table>
-				<!-- <img src="img/전체카테고리테이블.JPG"> -->
 
 
 			</div>
@@ -261,7 +264,6 @@
 		</div>
 	</div>
 
-	</div>
 	<footer>
 		<div id="hr"></div>
 		<div class="footertext">

@@ -47,6 +47,7 @@ body{
     background: url(../img/bg.png);
     background-size: cover;
     background-repeat: no-repeat;
+    z-index : -9999;
 }
 @media screen and (max-width:1024px){ /*1220 보다 넓이 작아지면 헤더 넓이 800으로 줄여줌*/
     .headerbg{

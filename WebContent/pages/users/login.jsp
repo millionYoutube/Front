@@ -10,7 +10,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LOGIN</title>
-        <link rel="shortcut icon" href="favicon.ico" type="image/" />
+<!--         <link rel="shortcut icon" href="favicon.ico" type="image/" /> -->
 
         <link rel="stylesheet" href="../../css/style.css"/>
         <link rel="stylesheet" href="../../css/login.css"/>
@@ -23,7 +23,7 @@
         <div class="headerbg"></div>
         <header>
             <div id="header-top">
-                <a href="../../index.html"><img src="../../img/P_Logo.png" id="logo" alt="main_logo"></a>
+                <a href="../../index.jsp"><img src="../../img/P_Logo.png" id="logo" alt="main_logo"></a>
             </div>
         </header>
         <div class="login_body">
